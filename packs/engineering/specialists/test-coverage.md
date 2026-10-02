@@ -1,7 +1,7 @@
 ---
 name: test-coverage
 description: Reviews changed code for missing test coverage -- new functions without tests, untested error paths, missing branch coverage
-model: haiku
+model: sonnet
 tier: full-only
 globs:
   - "**/*"
