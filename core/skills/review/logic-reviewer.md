@@ -82,8 +82,9 @@ For each meaningful change in the diff, apply these 7 reasoning patterns. You do
 - Check: does the code below actually match the assertion?
 - Check: is the comment stale from a previous iteration?
 - Check TODOs: is the described limitation still accurate?
+- A claim about wiring ("X closes through Y", "Z is translated by W") is a claim about a caller: open the caller and read the line. Do this for claims in specs, plans and PR text too, and never repeat a wiring claim from another reviewer's report without reading it yourself
 
-**What breaks**: Comment says "retries N times" but code has no counter. Comment describes behavior that was refactored away. Stale TODO describing a bug that was already fixed differently.
+**What breaks**: Comment says "retries N times" but code has no counter. Comment describes behavior that was refactored away. Stale TODO describing a bug that was already fixed differently. A spec says a modal's close is translated by one helper while its opener passes a callback that handles the close directly, so the described path never runs; the sentence was copied from an earlier review without opening the opener.
 
 ### 6. Follow the Lifecycle
 
