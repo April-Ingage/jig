@@ -58,7 +58,7 @@ For each meaningful change in the diff, apply these 7 reasoning patterns. You do
 - For `??` defaults: it only handles null/undefined — is that sufficient?
 - For if/else: is the else branch actually reachable?
 
-**What breaks**: Silent fallthrough to default. Valid falsy values triggering the fallback. Unreachable else branches that look like error handling but never execute.
+**What breaks**: Silent fallthrough to default. Valid falsy values triggering the fallback. Unreachable else branches that look like error handling but never execute. A dev-only fallback that swallows a failed request (mock data on error) lets tests pass while the real request path is broken; check that the tests exercise the failure with the fallback off.
 
 ### 4. Assume It's Null
 
