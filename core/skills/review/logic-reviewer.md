@@ -109,7 +109,7 @@ For each meaningful change in the diff, apply these 7 reasoning patterns. You do
 - Check: could an external dependency defeat the optimization?
 - Check: does a parent/container/caller undermine the fix?
 
-**What breaks**: Optimization defeated by the caller recreating objects every invocation. Cache bypassed because the key computation is wrong. Guard that checks the right condition but at the wrong point in the lifecycle.
+**What breaks**: Optimization defeated by the caller recreating objects every invocation. Cache bypassed because the key computation is wrong. Guard that checks the right condition but at the wrong point in the lifecycle. A test stubs a network response with the test framework's route interception, but in an Electron renderer the response can arrive with status 0, so the code under test sees a failure the stub never meant; the stub has to answer from the main process (for example with a protocol handler) for the test to reach the path it claims to.
 
 ## Proactive Exploration
 
