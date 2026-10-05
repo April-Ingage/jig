@@ -96,8 +96,11 @@ For each meaningful change in the diff, apply these 7 reasoning patterns. You do
 - Are subscriptions/timers/observers cleaned up properly?
 - Are resources released on BOTH success AND failure paths?
 - Do cached values hold references that should be fresh?
+- Can the same event fire twice (a repeated visibility or proximity report, a duplicate subscription callback)? Does the handler restart or duplicate work when it does?
+- Is a value read before an `await` or a microtask still current when it is used after?
+- When async work resolves, was its request superseded or its owning store reset in the meantime? Does it still commit?
 
-**What breaks**: State persisting across context changes. Resources not cleaned up on error path. Infinite polling because cleanup runs on a condition that never re-triggers. Memory leaks from unsubscribed listeners. Deferred callbacks (timers, rAF, promises) that fire after the owning context has been torn down — the callback mutates state that was already reset, corrupting the system.
+**What breaks**: State persisting across context changes. Resources not cleaned up on error path. Infinite polling because cleanup runs on a condition that never re-triggers. Memory leaks from unsubscribed listeners. Deferred callbacks (timers, rAF, promises) that fire after the owning context has been torn down — the callback mutates state that was already reset, corrupting the system. A repeated lifecycle event (a duplicate "near" or visibility report) restarts work that was already in flight. A value captured before an `await` is stale by the time it is used. An async load that resolves after a store reset or a newer request commits its result over the current state.
 
 ### 7. Test the Stated Goal
 
